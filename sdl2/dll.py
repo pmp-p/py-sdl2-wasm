@@ -212,7 +212,8 @@ class DLL(object):
                     minimumstr = self._version_int_to_str(minversions[libinfo])
                     err = "{0} (v{1}) is too old to be used by py-sdl2"
                     err += " (minimum v{0})".format(minimumstr)
-                    raise RuntimeError(err.format(libfile, versionstr))
+                    #raise RuntimeError(err.format(libfile, versionstr))
+                    pdb(__file__,216,err.format(libfile, versionstr))
                 break
             except Exception as exc:
                 # Could not load the DLL, move to the next, but inform the user

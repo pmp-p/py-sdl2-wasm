@@ -208,8 +208,9 @@ running = True
 def setup():
     global setup
 
-def loop():
+async def loop():
     global loop
+    import asyncio
     while running:
         for event in sdl2.ext.get_events():
             if event.type == sdl2.SDL_QUIT:
@@ -232,7 +233,8 @@ def loop():
                 sdl2.SDL_FlushEvent(sdl2.SDL_MOUSEMOTION)
                 break
         world.process()
-        sdl2.SDL_Delay(1)
+        asyncio.sleep(.016)
+
 
 def quit():
     sdl2.ext.quit()

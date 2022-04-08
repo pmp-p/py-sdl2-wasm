@@ -71,12 +71,3 @@ def loop():
     return True
 
 
-if __EMSCRIPTEN__:
-    setup()
-    aio.steps.append(loop)
-
-else:
-    while running:
-        loop()
-
-    sdl2.ext.quit()

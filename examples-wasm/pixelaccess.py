@@ -53,33 +53,40 @@ def draw_vertical_stripes(surface, x1, x2, y1, y2):
     del pixelview
 
 
-def run():
-    # You know those from the helloworld.py example.
-    # Initialize the video subsystem, create a window and make it visible.
-    sdl2.ext.init()
-    window = sdl2.ext.Window("Pixel Access", size=(800, 600))
-    window.show()
+# You know those from the helloworld.py example.
+# Initialize the video subsystem, create a window and make it visible.
+sdl2.ext.init()
+window = sdl2.ext.Window("Pixel Access", size=(800, 600))
+window.show()
 
-    # As in colorpalettes.py, explicitly acquire the window's surface to
-    # draw on.
-    windowsurface = window.get_surface()
+# As in colorpalettes.py, explicitly acquire the window's surface to
+# draw on.
+windowsurface = window.get_surface()
 
-    # We implement the functionality as it was done in colorpalettes.py and
-    # utilise a mapping table to look up the function to be executed, together
-    # with the arguments they should receive
-    functions = ((draw_horizontal_stripes, (windowsurface, 300, 500, 200, 400)),
-                 (draw_vertical_stripes, (windowsurface, 300, 500, 200, 400)),
-                 )
+# We implement the functionality as it was done in colorpalettes.py and
+# utilise a mapping table to look up the function to be executed, together
+# with the arguments they should receive
+functions = ((draw_horizontal_stripes, (windowsurface, 300, 500, 200, 400)),
+             (draw_vertical_stripes, (windowsurface, 300, 500, 200, 400)),
+             )
 
-    # A storage variable for the function we are currently on, so that we know
-    # which function to execute next.
-    curindex = 0
-    draw_horizontal_stripes(windowsurface, 300, 500, 200, 400)
+# A storage variable for the function we are currently on, so that we know
+# which function to execute next.
+curindex = 0
+draw_horizontal_stripes(windowsurface, 300, 500, 200, 400)
 
-    # The event loop is nearly the same as we used in colorpalettes.py. If you
-    # do not know, what happens here, take a look at colorpalettes.py for a
-    # detailled description.
-    running = True
+# The event loop is nearly the same as we used in colorpalettes.py. If you
+# do not know, what happens here, take a look at colorpalettes.py for a
+# detailled description.
+running = True
+
+def setup():
+    global setup
+
+async def loop():
+    global loop
+    import asyncio
+
     while running:
         events = sdl2.ext.get_events()
         for event in events:
@@ -98,9 +105,10 @@ def run():
                 func(*args)
                 break
         window.refresh()
+        await asyncio.sleep(0)
     sdl2.ext.quit()
     return 0
 
 
-if __name__ == "__main__":
-    sys.exit(run())
+#if __name__ == "__main__":
+#    sys.exit(run())

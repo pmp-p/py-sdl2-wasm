@@ -1,4 +1,5 @@
 """SDL2 wrapper package"""
+import sys
 from .dll import get_dll_file, _bind
 from ctypes import c_int as _cint
 
@@ -13,7 +14,10 @@ from .filesystem import *
 from .gamecontroller import *
 from .gesture import *
 from .haptic import *
-from .hidapi import *
+try:
+    from .hidapi import *
+except:
+    print("sdl2.hidapi not available", file=sys.stderr)
 from .hints import *
 from .joystick import *
 from .keyboard import *

@@ -66,7 +66,7 @@ def _using_ms_store_python():
 
 def _preload_deps(libname, dllpath):
     """Preloads all DLLs that SDL2 and its extensions link to (e.g. libFLAC).
-    
+
     This is required for Python installed from the Microsoft Store, which has
     strict DLL loading rules but will allow loading of DLLs that have already
     been loaded by the current process.
@@ -197,8 +197,11 @@ class DLL(object):
         foundlibs = _findlib(libnames, path)
         dllmsg = "PYSDL2_DLL_PATH: %s" % (os.getenv("PYSDL2_DLL_PATH") or "unset")
         if len(foundlibs) == 0:
-            raise RuntimeError("could not find any library for %s (%s)" %
-                               (libinfo, dllmsg))
+            #try static instead
+            foundlibs.append(None)
+        print("Found:",foundlibs)
+#raise RuntimeError("could not find any dynamic library for %s (%s)" %
+#                   (libinfo, dllmsg))
         for libfile in foundlibs:
             try:
                 self._dll = CDLL(libfile)
@@ -231,10 +234,10 @@ class DLL(object):
         function. If the version of the loaded library is older than the
         version where the function was added, an informative exception will
         be raised if the bound function is called.
-        
+
         Args:
             funcname (str): The name of the function to bind.
-            args (List or None, optional): The data types of the C function's 
+            args (List or None, optional): The data types of the C function's
                 arguments. Should be 'None' if function takes no arguments.
             returns (optional): The return type of the bound C function. Should
                 be 'None' if function returns 'void'.

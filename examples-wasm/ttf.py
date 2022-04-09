@@ -51,7 +51,7 @@ print(fontpath)
 
 print(60)
 print()
-font = FontTTF(fontpath, "20px", WHITE_RGBA)
+font = sys_trace( FontTTF, fontpath, "20px", WHITE_RGBA )
 
 print(63)
 

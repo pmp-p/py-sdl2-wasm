@@ -200,20 +200,19 @@ class DLL(object):
             #try static instead
             foundlibs.append(None)
         print("Found:",foundlibs)
-#raise RuntimeError("could not find any dynamic library for %s (%s)" %
-#                   (libinfo, dllmsg))
+
         for libfile in foundlibs:
             try:
                 self._dll = CDLL(libfile)
                 self._libfile = libfile
                 self._version = self._get_version(libinfo, self._dll)
-                if self._version < minversions[libinfo]:
-                    versionstr = self._version_int_to_str(self._version)
-                    minimumstr = self._version_int_to_str(minversions[libinfo])
-                    err = "{0} (v{1}) is too old to be used by py-sdl2"
-                    err += " (minimum v{0})".format(minimumstr)
-                    #raise RuntimeError(err.format(libfile, versionstr))
-                    pdb(__file__,216,err.format(libfile, versionstr))
+                if not sys.platform == 'emscripten':
+                    if self._version < minversions[libinfo]:
+                        versionstr = self._version_int_to_str(self._version)
+                        minimumstr = self._version_int_to_str(minversions[libinfo])
+                        err = "{0} (v{1}) is too old to be used by py-sdl2"
+                        err += " (minimum v{0})".format(minimumstr)
+                        raise RuntimeError(err.format(libfile, versionstr))
                 break
             except Exception as exc:
                 # Could not load the DLL, move to the next, but inform the user

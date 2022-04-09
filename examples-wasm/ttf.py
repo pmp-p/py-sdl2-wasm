@@ -35,11 +35,25 @@ if 1: #"-hardware" in sys.argv:
         sdl2.SDL_RENDERER_ACCELERATED | sdl2.SDL_RENDERER_PRESENTVSYNC
     )
 renderer = sdl2.ext.Renderer(window, flags=renderflags)
+
+
 window.show()
 
+print(56)
 # Create and initialize a font to render text with
 fontpath = RESOURCES.get_path("tuffy.ttf")
+print(fontpath)
+
+# fontpath= "/data/data/org.sdl2.pysdl2/assets/examples-wasm/resources/tuffy.ttf"
+#fontpath = b"/data/git/python-wasm-plus/src/org.sdl2.pysdl2/examples-wasm/resources/tuffy.ttf"
+#if __WASM__:
+#    fontpath = b"/data/data/org.sdl2.pysdl2/assets/examples-wasm/resources/tuffy.ttf"
+
+print(60)
+print()
 font = FontTTF(fontpath, "20px", WHITE_RGBA)
+
+print(63)
 
 # Add some additional font styles
 styles = ['default', 'small', 'red', 'large', 'bg_fill']
@@ -56,7 +70,7 @@ style_idx = 0
 
 # Set a default string with which to render text
 txt = u"Hi There!\nYou can edit this text using the keyboard and delete keys."
-
+print(76)
 # Render the text and present it on the screen
 txt_rendered = font.render_text(txt, width=780)
 update_text(renderer, txt_rendered)
@@ -68,14 +82,19 @@ sdl2.SDL_StartTextInput()
 # Create a simple event loop and wait for keydown, text editing, and quit events.
 running = True
 
+print(88)
 def setup():
     global setup
+
+class fake:
+    type = None
+
 
 def loop():
     global loop
     events = sdl2.ext.get_events()
     for event in events:
-        update_txt = False
+        update_txt = True
         if event.type == sdl2.SDL_QUIT:
             running = False
             return False
